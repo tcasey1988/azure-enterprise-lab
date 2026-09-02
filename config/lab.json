@@ -1,0 +1,25 @@
+{
+  "projectName": "Azure Enterprise Lab",
+  "environment": "dev",
+  "schedule": {
+    "mandatoryTeardownDate": "2026-09-25"
+  },
+  "azure": {
+    "region": "centralus",
+    "resourceGroupName": "rg-ael-dev"
+  },
+  "network": {
+    "virtualNetworkName": "vnet-ael-dev",
+    "addressSpace": "10.20.0.0/16",
+    "managementSubnetName": "snet-management",
+    "managementSubnet": "10.20.1.0/24",
+    "serverSubnetName": "snet-servers",
+    "serverSubnet": "10.20.2.0/24"
+  },
+  "activeDirectory": {
+    "domainName": "corp.example.com",
+    "netbiosName": "CORP",
+    "domainControllerName": "AZLAB-DC01",
+    "managementServerName": "AZLAB-MGMT01"
+  }
+}

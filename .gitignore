@@ -1,0 +1,44 @@
+# Terraform working data and state
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Local Terraform variables
+terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Credentials and secrets
+.env
+.env.*
+*.secret
+*.secrets
+credentials.json
+secrets.json
+local.settings.json
+config/local.json
+
+# PowerShell-generated output
+logs/
+reports/
+Transcripts/
+*.clixml
+
+# Azure local authentication
+.azure/
+
+# Editors
+.vscode/
+.idea/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak

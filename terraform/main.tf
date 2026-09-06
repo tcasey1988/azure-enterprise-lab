@@ -19,6 +19,7 @@ resource "azurerm_virtual_network" "lab" {
   location            = azurerm_resource_group.lab.location
   resource_group_name = azurerm_resource_group.lab.name
   address_space       = ["10.20.0.0/16"]
+  dns_servers         = ["10.20.2.10"]
 
   tags = local.common_tags
 }

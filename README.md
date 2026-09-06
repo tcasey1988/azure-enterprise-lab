@@ -14,3 +14,16 @@ The Azure network foundation is deployed through Terraform.
 - Management subnet: `10.20.1.0/24`
 - Server subnet: `10.20.2.0/24`
 - Separate NSGs are associated with each subnet
+
+### Management Host
+
+A Windows Server 2022 management VM is deployed in Central US.
+
+- VM: `vm-ael-mgmt01`
+- Size: `Standard_D2als_v7`
+- Private IP: `10.20.1.10`
+- Management access: RDP restricted to the administrator's current public IP
+- Cost control: automatic shutdown plus manual deallocation
+- Purpose: centralized administration of the Azure and Active Directory lab
+
+The management host is not a domain controller.

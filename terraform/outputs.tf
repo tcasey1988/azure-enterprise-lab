@@ -37,3 +37,13 @@ output "management_public_ip" {
   description = "Public IPv4 address used for restricted management access."
   value       = azurerm_public_ip.management.ip_address
 }
+
+output "domain_controller_vm_name" {
+  description = "Name of the future Active Directory domain-controller VM."
+  value       = azurerm_windows_virtual_machine.domain_controller.name
+}
+
+output "domain_controller_private_ip" {
+  description = "Private IP assigned to the future domain controller."
+  value       = azurerm_network_interface.domain_controller.private_ip_address
+}

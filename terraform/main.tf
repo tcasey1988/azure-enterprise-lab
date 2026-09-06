@@ -19,6 +19,7 @@ resource "azurerm_virtual_network" "lab" {
   location            = azurerm_resource_group.lab.location
   resource_group_name = azurerm_resource_group.lab.name
   address_space       = ["10.20.0.0/16"]
+  dns_servers         = ["10.20.2.10"]
 
   tags = local.common_tags
 }
@@ -140,6 +141,73 @@ resource "azurerm_windows_virtual_machine" "management" {
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "management" {
   virtual_machine_id = azurerm_windows_virtual_machine.management.id
+  location           = azurerm_resource_group.lab.location
+  enabled            = true
+
+  daily_recurrence_time = "0500"
+  timezone              = "Central Standard Time"
+
+  notification_settings {
+    enabled = false
+  }
+
+  tags = local.common_tags
+}
+
+resource "azurerm_network_interface" "domain_controller" {
+  name                = "nic-ael-dc01"
+  location            = azurerm_resource_group.lab.location
+  resource_group_name = azurerm_resource_group.lab.name
+
+  ip_configuration {
+    name                          = "primary"
+    subnet_id                     = azurerm_subnet.servers.id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.20.2.10"
+  }
+
+  tags = merge(local.common_tags, {
+    Role = "DomainController"
+  })
+}
+
+resource "azurerm_windows_virtual_machine" "domain_controller" {
+  name                = "vm-ael-dc01"
+  computer_name       = "AEL-DC01"
+  location            = azurerm_resource_group.lab.location
+  resource_group_name = azurerm_resource_group.lab.name
+  size                = var.management_vm_size
+
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+
+  network_interface_ids = [
+    azurerm_network_interface.domain_controller.id
+  ]
+
+  os_disk {
+    name                 = "osdisk-ael-dc01"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-datacenter-azure-edition-smalldisk"
+    version   = "latest"
+  }
+
+  patch_assessment_mode = "AutomaticByPlatform"
+  patch_mode            = "AutomaticByOS"
+
+  tags = merge(local.common_tags, {
+    Role = "DomainController"
+  })
+}
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "domain_controller" {
+  virtual_machine_id = azurerm_windows_virtual_machine.domain_controller.id
   location           = azurerm_resource_group.lab.location
   enabled            = true
 

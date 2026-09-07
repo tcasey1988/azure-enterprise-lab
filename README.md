@@ -27,3 +27,12 @@ A Windows Server 2022 management VM is deployed in Central US.
 - Purpose: centralized administration of the Azure and Active Directory lab
 
 The management host is not a domain controller.
+
+### Domain Management
+
+`AEL-MGMT01` is joined to `corp.aelab.test` and provides the administrative entry point for the private AD environment.
+
+- Domain membership: `corp.aelab.test`
+- Administrative tools: Active Directory RSAT
+- Domain controller access: private Azure network
+- Administrative sign-in: domain account

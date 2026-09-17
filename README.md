@@ -36,3 +36,22 @@ The management host is not a domain controller.
 - Administrative tools: Active Directory RSAT
 - Domain controller access: private Azure network
 - Administrative sign-in: domain account
+
+
+## Hybrid Identity Synchronization
+
+Microsoft Entra Cloud Sync provisions the six lab users from Active
+Directory to Microsoft Entra ID.
+
+- Direction: AD to Microsoft Entra ID
+- Source domain: `corp.aelab.test`
+- Scope: `OU=Users,OU=AEL,DC=corp,DC=aelab,DC=test`
+- Synchronized employee accounts: six
+- Password hash synchronization: enabled
+- Attribute mappings: Microsoft defaults
+- Accidental-delete protection: enabled
+- Administrative and computer objects: excluded
+
+Active Directory remains authoritative for synchronized identity
+attributes. A separate cloud-only Hybrid Identity Administrator provides
+administrative access if the on-premises environment is unavailable.
